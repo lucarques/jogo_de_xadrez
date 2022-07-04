@@ -11,7 +11,6 @@ namespace xadrez_console
             {
                 for (int j=0; j< tabuleiro.Colunas; j++)
                 {
-                    Console.Write(tabuleiro.Peca(i,j) + " ");
                     if (tabuleiro.Peca (i,j) == null)
                     {
                         Console.Write("- ");
