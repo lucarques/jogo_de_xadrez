@@ -23,7 +23,7 @@ namespace xadrez
             bool[,] matriz = new bool[Tabuleiro.Linhas, Tabuleiro.Colunas];
             Posicao posicao = new Posicao(0, 0);
 
-            //abaixo
+            //acima
 
             posicao.definirValores(Posicao.Linha - 1, Posicao.Coluna);
             if(Tabuleiro.posicaoValida (posicao) && podeMover(posicao))

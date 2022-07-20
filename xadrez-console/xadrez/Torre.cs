@@ -8,6 +8,7 @@ namespace xadrez
         {
 
         }
+        
         public override string ToString()
         {
             return "T";
@@ -21,56 +22,56 @@ namespace xadrez
         public override bool[,] movimentosPossiveis()
         {
             bool[,] matriz = new bool[Tabuleiro.Linhas, Tabuleiro.Colunas];
-            Posicao posicao = new Posicao(0, 0);
+            Posicao posicaoDestino = new Posicao(0, 0);
 
             //acima
-            Posicao.definirValores(posicao.Linha - 1, posicao.Coluna);
-            while (Tabuleiro.posicaoValida(posicao) && podeMover(posicao)) 
+            posicaoDestino.definirValores(Posicao.Linha - 1, Posicao.Coluna);
+            while (Tabuleiro.posicaoValida(posicaoDestino) && podeMover(posicaoDestino)) 
             {
-                matriz[posicao.Linha, posicao.Coluna] = true;
-                if (Tabuleiro.Peca(posicao) != null && Tabuleiro.Peca(posicao).Cor != Cor)
+                matriz[posicaoDestino.Linha, posicaoDestino.Coluna] = true;
+                if (Tabuleiro.Peca(posicaoDestino) != null && Tabuleiro.Peca(posicaoDestino).Cor != Cor)
                 {
                     break;
                 }
-                posicao.Linha = posicao.Linha - 1;
+                posicaoDestino.Linha = posicaoDestino.Linha - 1;
             }
 
             //abaixo
             
-            Posicao.definirValores(posicao.Linha + 1, posicao.Coluna);
-            while (Tabuleiro.posicaoValida(posicao) && podeMover(posicao))
+            posicaoDestino.definirValores(Posicao.Linha + 1, Posicao.Coluna);
+            while (Tabuleiro.posicaoValida(posicaoDestino) && podeMover(posicaoDestino))
             {
-                matriz[posicao.Linha, posicao.Coluna] = true;
-                if (Tabuleiro.Peca(posicao) != null && Tabuleiro.Peca(posicao).Cor != Cor)
+                matriz[posicaoDestino.Linha, posicaoDestino.Coluna] = true;
+                if (Tabuleiro.Peca(posicaoDestino) != null && Tabuleiro.Peca(posicaoDestino).Cor != Cor)
                 {
                     break;
                 }
-                posicao.Linha = posicao.Linha + 1;
+                posicaoDestino.Linha = posicaoDestino.Linha + 1;
             }
 
 
             //direita
-            Posicao.definirValores(posicao.Linha, posicao.Coluna +1);
-            while (Tabuleiro.posicaoValida(posicao) && podeMover(posicao))
+            posicaoDestino.definirValores(Posicao.Linha, Posicao.Coluna +1);
+            while (Tabuleiro.posicaoValida(posicaoDestino) && podeMover(posicaoDestino))
             {
-                matriz[posicao.Linha, posicao.Coluna] = true;
-                if (Tabuleiro.Peca(posicao) != null && Tabuleiro.Peca(posicao).Cor != Cor)
+                matriz[posicaoDestino.Linha, posicaoDestino.Coluna] = true;
+                if (Tabuleiro.Peca(posicaoDestino) != null && Tabuleiro.Peca(posicaoDestino).Cor != Cor)
                 {
                     break;
                 }
-                posicao.Coluna = posicao.Coluna + 1;
+                posicaoDestino.Coluna = posicaoDestino.Coluna + 1;
             }
 
             //esquerda
-            Posicao.definirValores(posicao.Linha, posicao.Coluna - 1);
-            while (Tabuleiro.posicaoValida(posicao) && podeMover(posicao))
+            posicaoDestino.definirValores(Posicao.Linha, Posicao.Coluna - 1);
+            while (Tabuleiro.posicaoValida(posicaoDestino) && podeMover(posicaoDestino))
             {
-                matriz[posicao.Linha, posicao.Coluna] = true;
-                if (Tabuleiro.Peca(posicao) != null && Tabuleiro.Peca(posicao).Cor != Cor)
+                matriz[posicaoDestino.Linha, posicaoDestino.Coluna] = true;
+                if (Tabuleiro.Peca(posicaoDestino) != null && Tabuleiro.Peca(posicaoDestino).Cor != Cor)
                 {
                     break;
                 }
-                posicao.Coluna = posicao.Coluna - 1;
+                posicaoDestino.Coluna = posicaoDestino.Coluna - 1;
             }
 
 
