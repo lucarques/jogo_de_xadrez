@@ -20,6 +20,11 @@
             QtdMovimentos++;
         }
 
+        public void decrementarQtdMovimentos()
+        {
+            QtdMovimentos--;
+        }
+
         public bool existeMovimentosPossiveis()
         {
             bool[,] matriz = movimentosPossiveis();
