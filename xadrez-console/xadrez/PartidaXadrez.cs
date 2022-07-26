@@ -25,14 +25,14 @@ namespace xadrez
 
         }
 
-        public Peca executaMovimento (Posicao origem, Posicao destino)
+        public Peca executaMovimento(Posicao origem, Posicao destino)
         {
             Peca peca = Tabuleiro.retirarPeca(origem);
             peca.incrementarQtdMovimentos();
 
             Peca pecaCapturada = Tabuleiro.retirarPeca(destino);
             Tabuleiro.colocarPeca(peca, destino);
-            if(pecaCapturada != null)
+            if (pecaCapturada != null)
             {
                 Capturadas.Add(pecaCapturada);
             }
@@ -43,13 +43,13 @@ namespace xadrez
         {
             Peca p = Tabuleiro.retirarPeca(destino);
             p.decrementarQtdMovimentos();
-            if(pecaCapturada != null)
+            if (pecaCapturada != null)
             {
                 Tabuleiro.colocarPeca(pecaCapturada, destino);
                 Capturadas.Remove(pecaCapturada);
             }
             Tabuleiro.colocarPeca(p, origem);
-            
+
         }
 
         public void realizaJogada(Posicao origem, Posicao destino)
@@ -70,14 +70,21 @@ namespace xadrez
             {
                 Xeque = false;
             }
+            if (testeXequemate(adversaria(JogadorAtual)))
+            {
+                Terminada = true;
+            }
+            else
+            {
 
-            Turno++;
-            mudaJogador();
+                Turno++;
+                mudaJogador();
+            }
         }
-        
+
         public void validaPosicaoOrigem(Posicao posicao)
         {
-            if(Tabuleiro.Peca(posicao) == null)
+            if (Tabuleiro.Peca(posicao) == null)
             {
                 throw new TabuleiroException("Não existe peça na posição de origem escolhida. [Pressione 'ENTER' para continuar!]");
             }
@@ -91,7 +98,7 @@ namespace xadrez
                 throw new TabuleiroException("Não há movimentos possíveis para a peça de origem escolhida! [Pressione 'ENTER' para continuar!]");
             }
         }
-        public void  validarPosicaoDestino (Posicao origem, Posicao destino)
+        public void validarPosicaoDestino(Posicao origem, Posicao destino)
         {
             if (!Tabuleiro.Peca(origem).podeMoverPara(destino))
             {
@@ -104,7 +111,7 @@ namespace xadrez
 
         private void mudaJogador()
         {
-            if(JogadorAtual == Cor.Branca)
+            if (JogadorAtual == Cor.Branca)
             {
                 JogadorAtual = Cor.Preta;
             }
@@ -141,9 +148,9 @@ namespace xadrez
             return auxiliar;
         }
 
-        private Cor adversaria (Cor cor)
+        private Cor adversaria(Cor cor)
         {
-            if(cor == Cor.Branca)
+            if (cor == Cor.Branca)
             {
                 return Cor.Preta;
             }
@@ -152,12 +159,12 @@ namespace xadrez
                 return Cor.Branca;
             }
         }
-        
-        private Peca rei (Cor cor)
+
+        private Peca rei(Cor cor)
         {
-            foreach(Peca peca in pecasEmJogo(cor))
+            foreach (Peca peca in pecasEmJogo(cor))
             {
-                if(peca is Rei)
+                if (peca is Rei)
                 {
                     return peca;
                 }
@@ -181,6 +188,39 @@ namespace xadrez
                 }
             }
             return false;
+        }
+
+        public bool testeXequemate(Cor cor)
+        {
+            if (!estaEmXeque(cor))
+            {
+                return false;
+            }
+            foreach (Peca peca in pecasEmJogo(cor))
+            {
+                bool[,] matriz = peca.movimentosPossiveis();
+                for (int i = 0; i < Tabuleiro.Linhas; i++)
+                {
+                    for (int j = 0; j < Tabuleiro.Colunas; i++)
+                    {
+                        if (matriz[i, j])
+                        {
+                            Posicao origem = peca.Posicao;
+                            Posicao destino = new Posicao(i, j);
+                            Peca pecaCapturada = executaMovimento(origem, destino);
+                            bool testeXeque = estaEmXeque(cor);
+                            desfazMovimento(origem, destino, pecaCapturada);
+                            if (!testeXeque)
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return true;
+
 
         }
         public void colocarNovaPeca(char coluna, int linha, Peca peca)
